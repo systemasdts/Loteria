@@ -32,7 +32,7 @@ public class FormInicio extends javax.swing.JFrame {
     int limite_agencia = 0;
     String jugada = "N";
     double monto_total = 0;
-    int haym=0,hayt=0,hayn=0;
+    int haym = 0, hayt = 0, hayn = 0;
     int limite = 3;
     int movimiento = 0;
     int cant_agotados = 0;
@@ -2757,10 +2757,13 @@ public class FormInicio extends javax.swing.JFrame {
         String loteria, loteria2;
         DefaultTableModel modelo = (DefaultTableModel) tabla_agotados.getModel();
         DefaultTableModel modelo2 = (DefaultTableModel) tabla_jugadas.getModel();
+
         for (int i = 0; i < tabla_agotados.getRowCount(); i++) {
+
             numero = new Integer(tabla_agotados.getValueAt(i, 1).toString());
             loteria = tabla_agotados.getValueAt(i, 0).toString();
             monto = new Integer(tabla_agotados.getValueAt(i, 2).toString());
+
             for (int j = 0; j < tabla_jugadas.getRowCount(); j++) {
                 numero2 = new Integer(tabla_jugadas.getValueAt(j, 3).toString());
                 monto_original = new Integer(tabla_jugadas.getValueAt(j, 4).toString());
@@ -2770,10 +2773,12 @@ public class FormInicio extends javax.swing.JFrame {
                 }
             }
         }
+        
         int filas = tabla_agotados.getRowCount();
         for (int i = 0; filas > i; i++) {
             modelo.removeRow(0);
         }
+        
         for (int i = tabla_jugadas.getRowCount() - 1; i >= 0; i--) {
             monto2 = new Integer(tabla_jugadas.getValueAt(i, 4).toString());
             if (monto2 == 0) {
@@ -2783,13 +2788,14 @@ public class FormInicio extends javax.swing.JFrame {
         cant_agotados = 0;
         Agotados.dispose();
         this.setEnabled(true);
+        
         if (tabla_jugadas.getRowCount() > 0) {
-            guardarTicket();
-            JOptionPane.showMessageDialog(null, "Imprimiendo el Ticket");
+            imprimir_ticket();
             limpiar_todo();
         } else {
             JOptionPane.showMessageDialog(null, "No hay jugadas para guardar");
         }
+        
     }//GEN-LAST:event_boton_jugar_agotadosActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
@@ -2924,6 +2930,7 @@ public class FormInicio extends javax.swing.JFrame {
         this.agotado_abierto = true;
         timer.schedule(new TimerTask() {
             int segundos = 0;
+
             @Override
             public void run() {
                 segundos++;
@@ -2948,19 +2955,18 @@ public class FormInicio extends javax.swing.JFrame {
                     cant_agotados = 0;
                     Agotados.dispose();
                     Agotados.setVisible(false);
-                    regresar();                   
+                    regresar();
 
                 }
             }
 
         }, 1, 1000);
-        
 
     }
 
     private void AgotadosWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_AgotadosWindowActivated
-        if (this.agotado_abierto == false ) {
-            this.ventanaAgotado();            
+        if (this.agotado_abierto == false) {
+            this.ventanaAgotado();
         }
     }//GEN-LAST:event_AgotadosWindowActivated
 
@@ -2984,19 +2990,19 @@ public class FormInicio extends javax.swing.JFrame {
     }
 
     private void darFoco() {
-        if (turno == 1 && haym>0) {
+        if (turno == 1 && haym > 0) {
             panel.setSelectedIndex(0);
             tabla_loteriasm.requestFocus();
             tabla_loteriasm.setColumnSelectionInterval(0, 0);
             tabla_loteriasm.setRowSelectionInterval(0, 0);
             tabla_loteriasm.changeSelection(0, 0, false, false);
-        } else if (turno == 2 && hayt>0) {
+        } else if (turno == 2 && hayt > 0) {
             panel.setSelectedIndex(1);
             tabla_loteriast.requestFocus();
             tabla_loteriast.setColumnSelectionInterval(0, 0);
             tabla_loteriast.setRowSelectionInterval(0, 0);
             tabla_loteriast.changeSelection(0, 0, false, false);
-        } else if (turno == 3 && hayn>0) {
+        } else if (turno == 3 && hayn > 0) {
             panel.setSelectedIndex(2);
             tabla_loteriasn.requestFocus();
             tabla_loteriasn.setColumnSelectionInterval(0, 0);
@@ -3006,7 +3012,7 @@ public class FormInicio extends javax.swing.JFrame {
     }
 
     private void llenarloteriasM() {
-        haym=0;
+        haym = 0;
         ConsultasBD buscar = new ConsultasBD(Con.conexion(), "SELECT * FROM loteria WHERE hora=1 and activo=1;");
         DefaultTableModel modelo = (DefaultTableModel) tabla_loteriasm.getModel();
         Object[] fila = new Object[3];
@@ -3071,7 +3077,7 @@ public class FormInicio extends javax.swing.JFrame {
     }
 
     private void llenarloteriasT() {
-        hayt=0;
+        hayt = 0;
         ConsultasBD buscar = new ConsultasBD(Con.conexion(), "SELECT * FROM loteria WHERE hora=2 and activo=1;");
         DefaultTableModel modelo = (DefaultTableModel) tabla_loteriast.getModel();
         Object[] fila = new Object[3];
@@ -3091,7 +3097,7 @@ public class FormInicio extends javax.swing.JFrame {
     }
 
     private void llenarloteriasN() {
-        hayn=0;
+        hayn = 0;
         ConsultasBD buscar = new ConsultasBD(Con.conexion(), "SELECT * FROM loteria WHERE hora=3 and activo=1;");
         DefaultTableModel modelo = (DefaultTableModel) tabla_loteriasn.getModel();
         Object[] fila = new Object[3];
@@ -3489,6 +3495,7 @@ public class FormInicio extends javax.swing.JFrame {
                 try {
                     if (resultado.last()) {
                         permitido = resultado.getInt("monto_max_total") - resultado.getInt("monto_consumido");
+                       
                         if (permitido < matriz[i][1]) {
                             cambiarMontoDisponible(matriz[i][0], permitido);
                         }

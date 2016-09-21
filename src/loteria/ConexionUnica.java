@@ -12,7 +12,7 @@ public class ConexionUnica {
         if (Con == null) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                Con = DriverManager.getConnection("jdbc:mysql://localhost/loteria", "root", "root");
+                Con = DriverManager.getConnection("jdbc:mysql://localhost/loteria", "root", "");
                 System.out.println("Conexion realizada correctamente, mediante la clase ConexionUnica");
                  return Con;
                  

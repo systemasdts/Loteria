@@ -11,7 +11,7 @@ public class Conectar {
         try {
             
             Class.forName("com.mysql.jdbc.Driver");
-            Con = DriverManager.getConnection("jdbc:mysql://localhost/loteria", "root", "root");
+            Con = DriverManager.getConnection("jdbc:mysql://localhost/loteria", "root", "");
             System.out.println("Conexion exitosamente mediante la clase Conectar");
             
         } catch (ClassNotFoundException | SQLException e) {
